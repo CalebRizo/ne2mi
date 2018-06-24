@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import logo from './logo.svg'
 import './App.css'
-import DATA from './plot_mock_data'
+import BASE_DATA from './utils/ne2mi-base-data'
 
 class App extends Component {
   constructor(props) {
@@ -34,6 +34,8 @@ class App extends Component {
       const length = x.length
       const t = [...Array(length).keys()].map(x => x * time)
 
+      console.log({zAxis})
+      console.log({yAxis})
       console.log({xAxis})
 
       this.setState({ xAxis, yAxis, zAxis, t })
@@ -57,6 +59,25 @@ class App extends Component {
         position: 0.0
       },
     };
+    const layoutX = Object.assign({}, layout)
+    layoutX.title = 'X-axial Force'
+    const layoutY = Object.assign({}, layout)
+    layoutY.title = 'Y-axial Force'
+    const layoutZ = Object.assign({}, layout)
+    layoutZ.title = 'Z-axial Force'
+    
+    const baseX = {
+      x: this.state.t,
+      y: BASE_DATA.xBase,
+      legendgroup: 'opennesstoexperience',
+      marker: {color: 'rgb(204, 16, 38)'},
+      mode: 'lines',
+      name: 'opennesstoexperience',
+      showlegend: false,
+      type: 'scatter',
+      xaxis: 'x1',
+      yaxis: 'y1'
+    }
     const traceX = {
       x: this.state.t,
       y: this.state.xAxis,
@@ -68,8 +89,21 @@ class App extends Component {
       type: 'scatter',
       xaxis: 'x1',
       yaxis: 'y1'
-    };
-    const dataX = [traceX];
+    }
+    const dataX = [baseX, traceX];
+
+    const baseY = {
+      x: this.state.t,
+      y: BASE_DATA.yBase,
+      legendgroup: 'opennesstoexperience',
+      marker: {color: 'rgb(204, 16, 38)'},
+      mode: 'lines',
+      name: 'opennesstoexperience',
+      showlegend: false,
+      type: 'scatter',
+      xaxis: 'x1',
+      yaxis: 'y1'
+    }
     const traceY = {
       x: this.state.t,
       y: this.state.yAxis,
@@ -82,7 +116,20 @@ class App extends Component {
       xaxis: 'x1',
       yaxis: 'y1'
     };
-    const dataY = [traceY];
+    const dataY = [baseY, traceY];
+
+    const baseZ = {
+      x: this.state.t,
+      y: BASE_DATA.zBase,
+      legendgroup: 'opennesstoexperience',
+      marker: {color: 'rgb(204, 16, 38)'},
+      mode: 'lines',
+      name: 'opennesstoexperience',
+      showlegend: false,
+      type: 'scatter',
+      xaxis: 'x1',
+      yaxis: 'y1'
+    }
     const traceZ = {
       x: this.state.t,
       y: this.state.zAxis,
@@ -95,7 +142,7 @@ class App extends Component {
       xaxis: 'x1',
       yaxis: 'y1'
     };
-    const dataZ = [traceZ];
+    const dataZ = [baseZ, traceZ];
     return (
       <div className="App">
         <header className="App-header">
@@ -104,15 +151,15 @@ class App extends Component {
         </header>
         <Plot
           data={dataX}
-          layout={layout}
+          layout={layoutX}
         />
         <Plot
           data={dataY}
-          layout={layout}
+          layout={layoutY}
         />
         <Plot
           data={dataZ}
-          layout={layout}
+          layout={layoutZ}
         />
       </div>
     );
