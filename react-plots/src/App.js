@@ -77,7 +77,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Welcome to Ne<sup>2</sup>mi</h1>
         </header>
         <Plot
           data={data}
