@@ -5,6 +5,7 @@
   "author": "Rodrigo Quezada <roderik.ikana@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "algorithmia": "^0.3.10",
     "uuid": "^3.2.1"
   }
 }
