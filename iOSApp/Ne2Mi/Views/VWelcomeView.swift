@@ -136,7 +136,12 @@ class VWelcomeView:UIView{
     @objc func startMotionDetection(sender:UIButton){
         timerCounter = 0
         motionData.text = "0"
-        accelData.text = "Espera..."
+        accelData.text = "Comienza a caminar"
+        self.timer = Timer.scheduledTimer(
+            timeInterval: kConstantTime,
+            target: self,
+            selector: #selector(self.update),
+            userInfo: nil, repeats: true)
         shouldStartUpdating = !shouldStartUpdating
         shouldStartUpdating ? (onStart()) : (onStop())
     }
@@ -144,7 +149,6 @@ class VWelcomeView:UIView{
     @objc func update(){
         if timerCounter == 20{
             notification.notificationOccurred(.success)
-            timerCounter = 0
             timer.invalidate()
             onStop()
             self.motionData.text = "\(timerCounter)"
@@ -198,14 +202,8 @@ class VWelcomeView:UIView{
                 if activity.walking {
                     self?.accelData.text = "Caminando"
                 } else if activity.stationary {
-                    self?.accelData.text = "Comienza"
+                    self?.accelData.text = "Comienza a caminar"
                     self?.notification.notificationOccurred(.success)
-                    self?.timer = Timer.scheduledTimer(
-                        timeInterval: (self?.kConstantTime)!,
-                        target: self!,
-                        selector: #selector(self?.update),
-                        userInfo: nil, repeats: true)
-
                 } else if activity.running {
                     self?.accelData.text = "Corriendo"
                 } else if activity.automotive {
@@ -292,12 +290,6 @@ class VWelcomeView:UIView{
             guard let pedometerData = pedometerData, error == nil else { return }
             DispatchQueue.main.async {
                 self?.gyroData.text = pedometerData.numberOfSteps.stringValue
-
-                UIView.animate(withDuration: 1.0) {
-                    self?.timerCounter = Int(truncating: pedometerData.numberOfSteps)
-                    self?.gyroData.transform = CGAffineTransform(scaleX: (self?.tmpSize)! * 4, y: (self?.tmpSize)! * 4)
-                }
-                self?.gyroData.transform = CGAffineTransform(scaleX: (self?.tmpSize)!, y: (self?.tmpSize)!)
             }
         }
     }
