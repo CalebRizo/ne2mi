@@ -1,0 +1,10 @@
+{
+  "name": "ne2mi",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Rodrigo Quezada <roderik.ikana@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "uuid": "^3.2.1"
+  }
+}
